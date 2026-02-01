@@ -31,12 +31,15 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      - name: Build and analyze with Maven + SonarCloud
+      - name: Build with Maven
+        run: mvn -B verify
+
+      - name: SonarCloud Scan
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn -B verify sonar:sonar \
+          mvn sonar:sonar \
             -Dsonar.projectKey=thennakoontmpm214210m_lab02 \
             -Dsonar.organization=thennakoontmpm214210m \
             -Dsonar.host.url=https://sonarcloud.io
